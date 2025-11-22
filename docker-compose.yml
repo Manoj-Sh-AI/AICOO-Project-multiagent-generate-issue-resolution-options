@@ -1,0 +1,34 @@
+services:
+
+  db18student:
+    build:
+      context: ./postgres
+      dockerfile: Dockerfile
+    image: "pg18-pgvector:latest"
+    restart: always
+    ports:
+      - "5434:5432"
+    volumes:
+      - db18student-data:/var/lib/postgresql/data/pgdata
+    environment:
+      - TZ=Europe/Berlin
+      - PGDATA=/var/lib/postgresql/data/pgdata
+      - POSTGRES_PASSWORD=aicooStudent
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=app
+
+  adminerstudent:
+    image: adminer
+    restart: always
+    ports:
+      - "8081:8080"
+    networks:
+      - default
+    depends_on:
+      - db18student
+    environment:
+      - TZ=Europe/Berlin
+      - ADMINER_DESIGN=pepa-linha-dark
+
+volumes:
+  db18student-data:

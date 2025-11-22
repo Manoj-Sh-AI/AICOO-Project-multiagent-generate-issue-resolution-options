@@ -1,0 +1,5 @@
+alembic
+sqlmodel
+psycopg2-binary
+matplotlib
+numpy
